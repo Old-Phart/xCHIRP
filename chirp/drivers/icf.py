@@ -46,8 +46,8 @@ ADDR_PC = 0xEE
 ADDR_RADIO = 0xEF
 
 SAVE_PIPE = None
-TRACE_ICF = 'CHIRP_DEBUG_ICF' in os.environ
-
+# TRACE_ICF = 'CHIRP_DEBUG_ICF' in os.environ
+TRACE_ICF = True        # RBF
 
 class IcfFrame:
     """A single ICF communication frame"""
@@ -196,12 +196,15 @@ def decode_model(data):
         return None
     rev = util.byte_to_int(data[5])
     LOG.info('Radio revision is %i' % rev)
+    LOG.warning('Radio revision is %i' % rev)      # RBF
     comment = data[6:6 + 16]
     LOG.info('Radio comment is %r' % comment)
+    LOG.warning('Radio comment is %r' % comment)       # RBF
     serial = binascii.unhexlify(data[35:35 + 14])
     model, b1, b2, u1, s3 = struct.unpack('>HBBBH', serial)
     serial_num = '%04i%02i%02i%04i' % (model, b1, b2, s3)
     LOG.info('Radio serial is %r' % serial_num)
+    LOG.warning('Radio serial is %r' % serial_num)     # RBF
     return rev
 
 
@@ -217,6 +220,7 @@ def get_model_data(radio, mdata=b"\x00\x00\x00\x00", stream=None):
         raise errors.RadioError("Unexpected response from radio")
 
     LOG.debug('Model query result:\n%s' % frames[0])
+    LOG.warning('Model query result:\n%s' % frames[0])    # RBF
 
     return frames[0].payload
 
@@ -333,6 +337,7 @@ def start_hispeed_clone(radio, cmd):
     frame.payload = radio.get_model()[:3] + b'\x00'
 
     LOG.debug("Starting HiSpeed Clone:\n%s" % frame)
+    LOG.warning("Starting HiSpeed Clone:\n%s" % frame)         # RBF
     radio.pipe.write(b'\xFE' * 14 + frame.pack())
     radio.pipe.flush()
 
@@ -353,6 +358,7 @@ def _clone_from_radio(radio):
                          raw=True)
 
     LOG.debug("Sent clone frame")
+    LOG.warning("Sent clone frame")       # RBF
 
     stream = RadioStream(radio.pipe)
 
@@ -378,6 +384,7 @@ def _clone_from_radio(radio):
                 LOG.debug("End frame (%i):\n%s" %
                           (len(frame.payload), util.hexprint(frame.payload)))
                 LOG.debug("Last addr: %04x" % addr)
+                LOG.warning("Last addr: %04x" % addr)     # RBF
                 # For variable-length radios, make sure we don't
                 # return a longer map than we got from the radio.
                 _mmap.truncate(addr)
