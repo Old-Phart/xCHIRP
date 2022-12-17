@@ -984,6 +984,34 @@ def unescape_raw_bytes(escaped_data):
     return data
 
 
+# This class was somehow removed during the icf.py Py3 conversion
+class IcomRawCloneModeRadio(IcomCloneModeRadio):
+    """Subclass for Icom clone-mode radios using the raw data protocol."""
+    def process_frame_payload(self, payload):
+        """Payloads from a raw-clone-mode radio are already in raw format."""
+        return unescape_raw_bytes(payload)
+
+    def get_payload(self, data, raw, checksum):
+        """Returns the data with optional checksum in raw format."""
+        payload = data
+        if checksum:
+            payload += bytes([compute_checksum(data)])
+        # Escape control characters.
+        escaped_payload = b''.join([escape_raw_byte(b) for b in payload])
+        return escaped_payload
+
+    def sync_in(self):
+        # The radio returns all the bytes with the high-order bit flipped.
+        _mmap = clone_from_radio(self)
+        _mmap = flip_high_order_bit(_mmap.get_packed())
+        self._mmap = memmap.MemoryMap(_mmap)
+        self.process_mmap()
+
+    def get_mmap(self):
+        _data = flip_high_order_bit(self._mmap.get_packed())
+        return memmap.MemoryMap(_data)
+
+
 class IcomLiveRadio(chirp_common.LiveRadio):
     """Base class for an Icom Live-mode radio"""
     VENDOR = "Icom"
