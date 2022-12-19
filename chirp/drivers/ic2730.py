@@ -72,12 +72,12 @@ u8 index;
 
 #seekto 0x4c40;
 struct {
-char com[16];
+u8 com[16];
 } comment;
 
 #seekto 0x4c50;
 struct {
-char name[6];
+u8 name[6];
 } bank_names[10];
 
 #seekto 0x4cc8;
@@ -87,7 +87,7 @@ u8 codes[24];
 
 #seekto 0x4c8c;
 struct {
-char nam[6];
+u8 nam[6];
 } pslnam[10];
 
 #seekto 0x4e80;
@@ -99,7 +99,7 @@ u24  hiflags:6
 u8  flag:4
     mode:4;
 u8  tstp;
-char name[6];
+u8 name[6];
 } pgmscanedge[25];
 
 #seekto 0x5000;
