@@ -15,8 +15,8 @@
 
 import json
 import logging
+import requests
 import tempfile
-import urllib
 from chirp import chirp_common, errors
 from chirp.settings import RadioSetting, RadioSettingGroup, \
      RadioSettingValueList
@@ -35,9 +35,6 @@ class DMRMARCRadio(chirp_common.NetworkSourceRadio):
     VENDOR = "DMR-MARC"
     MODEL = "Repeater database"
 
-    URL = "http://www.dmr-marc.net/cgi-bin/trbo-database/datadump.cgi?" \
-          "table=repeaters&format=json"
-
     def __init__(self, *args, **kwargs):
         chirp_common.NetworkSourceRadio.__init__(self, *args, **kwargs)
         self._repeaters = None
@@ -49,21 +46,11 @@ class DMRMARCRadio(chirp_common.NetworkSourceRadio):
         self._country = country
 
     def do_fetch(self):
-        url = 'https://radioid.net/api/dmr/repeater/?%s' % (
-                   urllib.urlencode([('city', self._city),
-                                     ('state', self._state),
-                                     ('country', self._country)]))
-        fn = tempfile.mktemp(".json")
-        filename, headers = urllib.urlretrieve(url, fn)
-        with open(fn, 'r') as f:
-            try:
-                self._repeaters = json.load(f)['results']
-            except AttributeError:
-                raise errors.RadioError(
-                    "Unexpected response from %s" % self.URL)
-            except ValueError as e:
-                raise errors.RadioError(
-                    "Invalid JSON from %s. %s" % (self.URL, str(e)))
+        r = requests.get('https://radioid.net/api/dmr/repeater/',
+                         params={'city': self._city,
+                                 'state': self._state,
+                                 'country': self._country})
+        self._repeaters = r.json()['results']
 
     def get_features(self):
         if not self._repeaters:
