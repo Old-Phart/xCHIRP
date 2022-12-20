@@ -138,7 +138,7 @@ class RadioStream:
                 end = self.data.index(b'\xFD')
                 frame = IcfFrame.parse(self.data[:end + 1])
                 self.data = self.data[end + 1:]
-                if frame.src == 0xEE and frame.dst == 0xEF:
+                if frame.src == ADDR_PC and frame.dst == ADDR_RADIO:
                     # PC echo, ignore
                     if self.iecho is None:
                         LOG.info('Detected an echoing cable')
@@ -188,7 +188,7 @@ class RadioStream:
             if len(f) != 0:
                 LOG.warning('Expected to read one echo frame, found %i',
                             len(f))
-            if f and f[0].src == 0xEF:
+            if f and f[0].src == ADDR_RADIO:
                 LOG.warning('Expected PC echo but found radio frame!')
 
 
@@ -209,7 +209,7 @@ def decode_model(data):
 
 def get_model_data(radio, mdata=b"\x00\x00\x00\x00", stream=None):
     """Query the @radio for its model data"""
-    send_clone_frame(radio, 0xe0, mdata, raw=True)
+    send_clone_frame(radio, CMD_CLONE_ID, mdata, raw=True)
 
     if stream is None:
         stream = RadioStream(radio.pipe)
@@ -257,7 +257,7 @@ def send_clone_frame(radio, cmd, data, raw=False, checksum=False):
     if TRACE_ICF:
         LOG.debug('Sending:\n%s' % frame)
 
-    if cmd == 0xe4:
+    if cmd == CMD_CLONE_DAT:
         # Uncomment to avoid cloning to the radio
         # return frame
         pass
@@ -443,7 +443,7 @@ def _clone_to_radio(radio):
     global SAVE_PIPE
 
     # Uncomment to save out a capture of what we actually write to the radio
-    SAVE_PIPE = open("pipe_capture.log", "wb")     # RJD 12/17/22
+    # SAVE_PIPE = open("pipe_capture.log", "wb")     # RJD 12/17/22
 
     stream = RadioStream(radio.pipe)
     md = get_model_data(radio, stream=stream)
@@ -962,8 +962,8 @@ def escape_raw_byte(byte):
     # Certain bytes are used as control characters to the radio, so if one of
     # these bytes is present in the stream to the radio, it gets escaped as
     # 0xff followed by (byte & 0x0f)
-    if byte > 0xf9:
-        return bytes([0xff, byte & 0xf])
+    if byte > 0xF9:
+        return bytes([0xFF, byte & 0x0F])
     return bytes([byte])
 
 
@@ -973,12 +973,12 @@ def unescape_raw_bytes(escaped_data):
     i = 0
     while i < len(escaped_data):
         byte = escaped_data[i]
-        if byte == 0xff:
+        if byte == 0xFF:
             if i + 1 >= len(escaped_data):
                 raise errors.InvalidDataError(
                     "Unexpected escape character at end of data")
             i += 1
-            byte = 0xf0 | escaped_data[i]
+            byte = 0xF0 | escaped_data[i]
         data += bytes([byte])
         i += 1
     return data
