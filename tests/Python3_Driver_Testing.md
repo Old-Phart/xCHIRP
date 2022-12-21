@@ -55,8 +55,8 @@
 | <a name="Baofeng_UV-9G"></a> Baofeng_UV-9G | [@KC9HI](https://github.com/KC9HI) | 3-Dec-2022 | Yes | 0.65% |
 | <a name="Baofeng_UV-9R"></a> Baofeng_UV-9R | [@KC9HI](https://github.com/KC9HI) | 3-Dec-2022 | Yes | **2.52%** |
 | <a name="Baofeng_UV-B5"></a> Baofeng_UV-B5 | [@KC9HI](https://github.com/KC9HI) | 18-Nov-2022 | Yes | 0.35% |
-| <a name="Baojie_BJ-218"></a> Baojie_BJ-218 |  |  | Yes | 0.29% |
-| <a name="Baojie_BJ-318"></a> Baojie_BJ-318 |  |  | Yes | 0.10% |
+| <a name="Baojie_BJ-218"></a> Baojie_BJ-218 | AA0RD | 19-Dec-2022 | Yes | 0.29% |
+| <a name="Baojie_BJ-318"></a> Baojie_BJ-318 | [Implied by BJ-218] | 19-Dec-2022 | Yes | 0.10% |
 | <a name="Baojie_BJ-9900"></a> Baojie_BJ-9900 |  |  |  | 0.02% |
 | <a name="Baojie_BJ-UV55"></a> Baojie_BJ-UV55 |  |  | Yes | 0.03% |
 | <a name="Boblov_X3Plus"></a> Boblov_X3Plus |  |  |  | 0.02% |
@@ -286,7 +286,7 @@
 | <a name="TYT_TH-9800_File"></a> TYT_TH-9800_File |  |  |  | 0.00% |
 | <a name="TYT_TH-UV3R"></a> TYT_TH-UV3R |  |  |  | 0.04% |
 | <a name="TYT_TH-UV3R-25"></a> TYT_TH-UV3R-25 |  |  |  | 0.02% |
-| <a name="TYT_TH-UV8000"></a> TYT_TH-UV8000 |  |  |  | 0.31% |
+| <a name="TYT_TH-UV8000"></a> TYT_TH-UV8000 | AA0RD | 19-Dec-2022 |  | 0.31% |
 | <a name="TYT_TH-UV88"></a> TYT_TH-UV88 | [@KC9HI](https://github.com/KC9HI) | 5-Dec-2022 | Yes | 0.51% |
 | <a name="TYT_TH-UVF1"></a> TYT_TH-UVF1 | [@kk7ds](https://github.com/kk7ds) | 13-Dec-2022 | Yes | 0.06% |
 | <a name="TYT_TH-UVF8D"></a> TYT_TH-UVF8D |  |  |  | 0.05% |
@@ -317,7 +317,7 @@
 | <a name="Yaesu_FT-2800M"></a> Yaesu_FT-2800M |  |  | Yes | 0.03% |
 | <a name="Yaesu_FT-2900R_1900R"></a> Yaesu_FT-2900R_1900R |  |  | Yes | 0.05% |
 | <a name="Yaesu_FT-2900R_1900RTXMod_Opened_Xmit"></a> Yaesu_FT-2900R_1900RTXMod_Opened_Xmit |  |  | Yes |  |
-| <a name="Yaesu_FT-450D"></a> Yaesu_FT-450D |  |  | Yes | 0.01% |
+| <a name="Yaesu_FT-450D"></a> Yaesu_FT-450D | AA0RD | 21-Dec-2022  | Yes | 0.01% |
 | <a name="Yaesu_FT-4VR"></a> Yaesu_FT-4VR |  |  | Yes | 0.01% |
 | <a name="Yaesu_FT-4XE"></a> Yaesu_FT-4XE |  |  | Yes | 0.14% |
 | <a name="Yaesu_FT-4XR"></a> Yaesu_FT-4XR |  |  | Yes | 0.11% |
