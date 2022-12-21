@@ -81,7 +81,7 @@ class RadioReferenceRadio(chirp_common.NetworkSourceRadio):
                         # some counties are actually cities but whatever fml
                         clist.append([province[0], province[2],
                                       county[0], county[1]])
-        except WebFault, err:
+        except WebFault as err:
             raise errors.RadioError(err)
         return clist, provinces
 
@@ -96,13 +96,13 @@ class RadioReferenceRadio(chirp_common.NetworkSourceRadio):
                 service = self._client.service
                 zipcode = service.getZipcodeInfo(self._zipcounty, self._auth)
                 county = service.getCountyInfo(zipcode.ctid, self._auth)
-            except WebFault, err:
+            except WebFault as err:
                 raise errors.RadioError(err)
         if self._country == 'CA':
             try:
                 service = self._client.service
                 county = service.getCountyInfo(self._zipcounty, self._auth)
-            except WebFault, err:
+            except WebFault as err:
                 raise errors.RadioError(err)
 
         status = chirp_common.Status()
@@ -217,8 +217,8 @@ def main():
                    country=sys.argv[3],
                    zipcounty=sys.argv[4])
     rrr.do_fetch()
-    print rrr.get_raw_memory(0)
-    print rrr.get_memory(0)
+    print(rrr.get_raw_memory(0))
+    print(rrr.get_memory(0))
 
 if __name__ == "__main__":
     main()
