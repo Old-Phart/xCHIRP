@@ -524,20 +524,19 @@ class FTX450Radio(yaesu_clone.YaesuCloneModeRadio):
                 time.sleep(0.01)
                 xsum = yaesu_clone.YaesuChecksum(pos, pos + block - 1)
                 xs = xsum.get_calculated(self.get_mmap())
-                xs = xs & 255           # RJD RBF
-                LOG.warning("***** Blocks %i, xs=%02x" % (blocks,xs))     # RJD RBF
-                self.pipe.write(bytes(chr(blocks), encoding='utf8'))
-                self.pipe.write(self.get_mmap()[pos:pos + block])
-                self.pipe.write(bytes(chr(xs), encoding='utf8'))
-                buf = str(self.pipe.read(1))
-                LOG.warning("***** len(buf)=%i" % len(buf))     # RJD RBF
-                LOG.warning("***** buf[0]=%s" % buf)  # RJD RBF
-                if not buf or ord(buf[0]) != CMD_ACK:
+                # dbg1 = bytes(chr(blocks), encoding='utf8')
+                # dbg3 = bytes(chr(xs), encoding='utf8')
+                dbg1 = bytes(chr(blocks), encoding='latin_1')
+                dbg2 = self.get_mmap()[pos:pos + block]
+                dbg3 = bytes(chr(xs), encoding='latin_1')
+                self.pipe.write(dbg1)
+                self.pipe.write(dbg2)
+                self.pipe.write(dbg3)
+                buf = bytes(self.pipe.read(1))
+                if not buf or buf[0] != CMD_ACK:
                     time.sleep(delay)
                     buf = bytes(self.pipe.read(1))
-                if not buf or ord(buf[0]) != CMD_ACK:
-                    LOG.warning("****#2 len(buf)=%i" % len(buf))     # RJD RBF
-                    # LOG.warning("***** buf=%i" % ord(buf[0]))     # RJD RBF
+                if not buf or buf[0] != CMD_ACK:
                     raise Exception(_("Radio did not ack block %i") % blocks)
                 pos += block
                 blocks += 1
