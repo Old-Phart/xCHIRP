@@ -24,7 +24,7 @@ import time
 import logging
 import struct
 
-from io import open     # RJD 12/17/22
+from io import open     # AA0RD 12/17/22
 
 from chirp import bitwise
 from chirp import chirp_common, errors, util, memmap
@@ -443,7 +443,7 @@ def _clone_to_radio(radio):
     global SAVE_PIPE
 
     # Uncomment to save out a capture of what we actually write to the radio
-    # SAVE_PIPE = open("pipe_capture.log", "wb")     # RJD 12/17/22
+    # SAVE_PIPE = open("pipe_capture.log", "wb")     # AA0RD 12/17/22
 
     stream = RadioStream(radio.pipe)
     md = get_model_data(radio, stream=stream)
