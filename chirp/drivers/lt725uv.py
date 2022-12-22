@@ -73,6 +73,8 @@ struct {
   u8  dtmf8[7];
 } dtmf_tab;
 
+
+
 #seekto 0x0280;
 struct {
   u8  native_id_cnt;
@@ -1338,7 +1340,8 @@ class LT725UV(chirp_common.CloneModeRadio):
             """Generate the DTMF code 1-8, NOT a callback."""
             tmp = ""
             if knt > 0 and knt != 0xff:
-                for val in ary[:knt]:
+                for j in range(0, knt, 1):
+                    val = ary[j]
                     if val > 0 and val <= 9:
                         tmp += chr(val + 48)
                     elif val == 0x0a:
