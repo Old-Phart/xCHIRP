@@ -44,6 +44,7 @@ EX_MODES = ["USER-L", "USER-U", "LSB+CW", "USB+CW", "RTTY-L", "RTTY-U", "N/A"]
 for i in EX_MODES:
     chirp_common.MODES.append(i)
 T_STEPS = sorted(list(chirp_common.TUNING_STEPS))
+T_STEPS.insert(0,0.5)
 T_STEPS.remove(30.0)
 T_STEPS.remove(100.0)
 T_STEPS.remove(125.0)
@@ -567,6 +568,7 @@ class FTX450Radio(yaesu_clone.YaesuCloneModeRadio):
         rf = chirp_common.RadioFeatures()
         rf.has_bank = False
         rf.has_dtcs = False
+        rf.has_nostep_tuning = True
         if MEM_GRP_LBL:
             rf.has_comment = True   # Used for Mem-Grp number
         rf.valid_modes = list(set(self.MODES))
