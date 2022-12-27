@@ -295,6 +295,7 @@ class IC2730Radio(icf.IcomCloneModeRadio):
     _can_hispeed = True
     _raw_frames = True
     _highbit_flip = True
+    _MUNCH_CLONE_RESP = True
 
     _icf_data = {
         'MapRev': 1,
